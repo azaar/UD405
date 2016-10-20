@@ -2,6 +2,7 @@ package com.udacity.gamedev.dragoncurve;
 
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class DragonCurveGenerator {
@@ -31,13 +32,25 @@ public class DragonCurveGenerator {
 
         for (int i = 0; i < recursions; i++){
             // TODO: Create a reversed copy of turns
+            LinkedList<Direction> reversed = new LinkedList<Direction>(turns);
+            Collections.copy(turns, reversed);
+            Collections.reverse(reversed);
 
 
             // TODO: Add a left turn to turns
+            turns.add(Direction.LEFT);
 
 
             // TODO: Add reflected version of reversed to turns
-
+            for (Direction dir : reversed) {
+                switch (dir) {
+                    case LEFT:
+                        turns.add(Direction.RIGHT);
+                        break;
+                    case RIGHT:
+                        turns.add(Direction.LEFT);
+                }
+            }
         }
         return turns;
     }
@@ -56,6 +69,13 @@ public class DragonCurveGenerator {
         curve[i++] = head.y;
 
         //TODO: Convert the list of turns into the actual path
+        for (Direction dir : turns) {
+            heading = Direction.turn(heading, dir);
+            head.x += heading.x;
+            head.y += heading.y;
+            curve[i++] = head.x;
+            curve[i++] = head.y;
+        }
 
 
         return curve;

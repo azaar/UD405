@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 
@@ -41,7 +41,7 @@ public class ViewportsDemo extends ApplicationAdapter {
         camera = new OrthographicCamera();
 
         // Makes the size of the world match the size of the screen
-        viewport = new ScreenViewport(camera);
+//        viewport = new ScreenViewport(camera);
 
         // Make the world fill the screen, regardless of aspect ratio
 //        viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
@@ -53,7 +53,7 @@ public class ViewportsDemo extends ApplicationAdapter {
 //        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
         // Make the short axis of the world larger to fill the screen, maintaining aspect ratio
-//        viewport = new ExtendViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+        viewport = new ExtendViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
 
         viewport.setScreenBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
