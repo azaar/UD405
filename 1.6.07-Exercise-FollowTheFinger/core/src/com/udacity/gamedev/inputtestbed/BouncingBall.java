@@ -31,8 +31,10 @@ public class BouncingBall extends InputAdapter {
     boolean flicking = false;
 
     // TODO: Declare a Vector2 to hold the ball's target position
+    Vector2 ballTarget;
 
     // TODO: Declare a boolean to hold whether the ball is following something (and set it to false)
+    boolean ballFollows;
 
 
     float baseRadius;
@@ -78,6 +80,11 @@ public class BouncingBall extends InputAdapter {
 
         // TODO: If we're following something, calculate the difference vector between the targetPosition and the ball's position
         // TODO: Set the velocity to that vector times the FOLLOW_MULTIPLIER
+        if (ballFollows) {
+            Vector2 diff = new Vector2(ballTarget.x - position.x, ballTarget.y- position.y);
+            velocity.x = diff.x * FOLLOW_MULTIPLIER;
+            velocity.y = diff.y * FOLLOW_MULTIPLIER;
+        }
 
 
 
@@ -164,8 +171,10 @@ public class BouncingBall extends InputAdapter {
             flickStart = worldClick;
         } else {
             // TODO: Set the target position
+            ballTarget = worldClick;
 
             // TODO: Set the following flag
+            ballFollows = true;
 
         }
 
@@ -176,6 +185,9 @@ public class BouncingBall extends InputAdapter {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         // TODO: If we're following, then update the target position (remember to unproject the touch location)
+        if (ballFollows) {
+            ballTarget = viewport.unproject(new Vector2(screenX, screenY));
+        }
 
 
 
@@ -194,6 +206,7 @@ public class BouncingBall extends InputAdapter {
         }
 
         // TODO: Reset the following flag
+        ballFollows = false;
 
 
         return true;
