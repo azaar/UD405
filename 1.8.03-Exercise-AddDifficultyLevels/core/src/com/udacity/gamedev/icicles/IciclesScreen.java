@@ -2,7 +2,6 @@ package com.udacity.gamedev.icicles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.udacity.gamedev.icicles.Constants.Difficulty;
 
 
 public class IciclesScreen implements Screen {
@@ -19,6 +19,7 @@ public class IciclesScreen implements Screen {
     public static final String TAG = IciclesScreen.class.getName();
 
     // TODO: Add Difficulty
+    Difficulty difficulty;
 
 
     ExtendViewport iciclesViewport;
@@ -34,8 +35,9 @@ public class IciclesScreen implements Screen {
     int topScore;
 
     // TODO: Accept a Difficulty in the constructor
-    public IciclesScreen() {
+    public IciclesScreen(Difficulty difficulty) {
         // TODO: Set Difficulty
+        this.difficulty = difficulty;
 
     }
 
@@ -54,7 +56,7 @@ public class IciclesScreen implements Screen {
 
         player = new Player(iciclesViewport);
         // TODO: Initialize icicles with the difficulty
-        icicles = new Icicles(iciclesViewport);
+        icicles = new Icicles(iciclesViewport, difficulty);
 
         topScore = 0;
     }
@@ -101,7 +103,7 @@ public class IciclesScreen implements Screen {
         topScore = Math.max(topScore, icicles.iciclesDodged);
 
         // TODO: Show Difficulty level in the top left
-        font.draw(batch, "Deaths: " + player.deaths,
+        font.draw(batch, "Deaths: " + player.deaths + "\nDifficulty: " + difficulty.label,
                 Constants.HUD_MARGIN, hudViewport.getWorldHeight() - Constants.HUD_MARGIN);
         font.draw(batch, "Score: " + icicles.iciclesDodged + "\nTop Score: " + topScore,
                 hudViewport.getWorldWidth() - Constants.HUD_MARGIN, hudViewport.getWorldHeight() - Constants.HUD_MARGIN,
